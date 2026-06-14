@@ -1,0 +1,13 @@
+using System.Data;
+using Npgsql;
+
+namespace BookStoreApi.Data;
+
+public sealed class DbConnectionFactory(IConfiguration configuration) : IDbConnectionFactory
+{
+    private readonly IConfiguration _configuration = configuration;
+    public IDbConnection CreateConnection()
+    {
+        return new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+    }
+}
