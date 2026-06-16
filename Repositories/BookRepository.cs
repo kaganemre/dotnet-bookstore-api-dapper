@@ -6,62 +6,66 @@ namespace BookStoreApi.Repositories;
 
 public sealed class BookRepository(IDbConnectionFactory connectionFactory) : IBookRepository
 {
-    private readonly IDbConnectionFactory _connectionFactory = connectionFactory;
-
-    public async Task<IEnumerable<BookResponse>> GetAllAsync()
+    public async Task<IEnumerable<BookResponse>> GetAllAsync(CancellationToken ct)
     {
-        using var connection = await _connectionFactory.CreateConnectionAsync();
+        using var connection = await connectionFactory.CreateConnectionAsync();
         const string sql = "SELECT id, title, author, price, stock FROM books";
 
-        return await connection.QueryAsync<BookResponse>(sql);
+        var command = new CommandDefinition(sql, cancellationToken: ct);
+        return await connection.QueryAsync<BookResponse>(command);
     }
 
-    public async Task<BookResponse?> GetByIdAsync(Guid id)
+    public async Task<BookResponse?> GetByIdAsync(Guid id, CancellationToken ct)
     {
-        using var connection = await _connectionFactory.CreateConnectionAsync();
+        using var connection = await connectionFactory.CreateConnectionAsync();
         const string sql = "SELECT id, title, author, price, stock FROM books WHERE id = @Id";
 
-        return await connection.QueryFirstOrDefaultAsync<BookResponse>(sql, new { Id = id });
+        var command = new CommandDefinition(sql, new { Id = id }, cancellationToken: ct);
+        return await connection.QueryFirstOrDefaultAsync<BookResponse>(command);
     }
 
-    public async Task<Guid> CreateAsync(CreateBookRequest request)
+    public async Task<Guid> CreateAsync(CreateBookRequest request, CancellationToken ct)
     {
-        using var connection = await _connectionFactory.CreateConnectionAsync();
+        using var connection = await connectionFactory.CreateConnectionAsync();
         const string sql = @"
             INSERT INTO books (title, author, price, stock)
             VALUES (@Title, @Author, @Price, @Stock)
             RETURNING id";
-        
-        return await connection.ExecuteScalarAsync<Guid>(sql, request);
+
+        var command = new CommandDefinition(sql, request, cancellationToken: ct);
+        return await connection.ExecuteScalarAsync<Guid>(command);
     }
 
-    public async Task<bool> UpdateAsync(Guid id, UpdateBookRequest request)
+    public async Task<bool> UpdateAsync(Guid id, UpdateBookRequest request, CancellationToken ct)
     {
-        using var connection = await _connectionFactory.CreateConnectionAsync();
+        using var connection = await connectionFactory.CreateConnectionAsync();
         const string sql = @"
         UPDATE books
         SET title = @Title, author = @Author, price = @Price, stock = @Stock
         WHERE id = @Id";
 
-        var rowsAffected = await connection.ExecuteAsync(sql, new
+        var command = new CommandDefinition(sql, new
         {
             id,
             request.Title,
             request.Author,
             request.Price,
             request.Stock
-        });
+        }, cancellationToken: ct);
+
+        var rowsAffected = await connection.ExecuteAsync(command);
 
         return rowsAffected > 0;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken ct)
     {
-        using var connection = await _connectionFactory.CreateConnectionAsync();
+        using var connection = await connectionFactory.CreateConnectionAsync();
         const string sql = "DELETE FROM books WHERE id = @Id";
 
-        var rowsAffected = await connection.ExecuteAsync(sql, new { Id = id });
-        
+        var command = new CommandDefinition(sql, new { Id = id }, cancellationToken: ct);
+        var rowsAffected = await connection.ExecuteAsync(command);
+
         return rowsAffected > 0;
     }
 }

@@ -1,5 +1,6 @@
 using BookStoreApi.Data;
 using BookStoreApi.Endpoints;
+using BookStoreApi.Extensions;
 using BookStoreApi.Repositories;
 using Scalar.AspNetCore;
 
@@ -11,8 +12,14 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<DatabaseSeeder>();
 
 var app = builder.Build();
+
+if (await app.HandleDatabaseSeedingAsync(args) is { } result)
+{
+    Environment.Exit(result ? 0 : 1);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
