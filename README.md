@@ -1,6 +1,13 @@
 # BookStore API
 
-A RESTful bookstore API built with **ASP.NET Core 10 Minimal API**, **Dapper**, and **PostgreSQL (Supabase)**. It features a CLI-driven database seeder, interactive OpenAPI documentation, and full CRUD operations over a books catalogue.
+![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![Dapper](https://img.shields.io/badge/Dapper-ORM-ff69b4)
+![Bogus](https://img.shields.io/badge/Bogus-Fake%20Data-orange)
+![Scalar](https://img.shields.io/badge/Scalar-API%20Docs-000000)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
+A RESTful bookstore API built with **ASP.NET Core 10 Minimal API**, **Dapper**, and **PostgreSQL**. It features a CLI-driven database seeder, interactive OpenAPI documentation, and full CRUD operations over a books catalogue.
 
 ## Tech Stack
 
@@ -9,8 +16,7 @@ A RESTful bookstore API built with **ASP.NET Core 10 Minimal API**, **Dapper**, 
 | Framework | ASP.NET Core 10 Minimal API |
 | ORM | Dapper |
 | Database | PostgreSQL via Npgsql |
-| Database Host | Supabase |
-| Seed Data | Bogus |
+| Seed Data | Bogus (fake data generation) |
 | API Docs | Scalar + Microsoft.AspNetCore.OpenApi |
 
 ## Project Structure
