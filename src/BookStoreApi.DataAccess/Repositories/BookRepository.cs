@@ -1,9 +1,8 @@
+using BookStoreApi.BookStoreApi.Business.Dtos;
 using BookStoreApi.DataAccess.Context;
-using BookStoreApi.Dtos;
-using BookStoreApi.Repositories;
 using Dapper;
 
-namespace BookStoreApi.DataAccess.Repositories;
+namespace BookStoreApi.BookStoreApi.DataAccess.Repositories;
 
 public sealed class BookRepository(IDbConnectionFactory connectionFactory) : IBookRepository
 {

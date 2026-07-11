@@ -1,6 +1,6 @@
-using BookStoreApi.Dtos;
+using BookStoreApi.BookStoreApi.Business.Dtos;
 
-namespace BookStoreApi.DataAccess.Repositories;
+namespace BookStoreApi.BookStoreApi.DataAccess.Repositories;
 
 public interface IBookRepository
 {
