@@ -1,7 +1,7 @@
 using System.Data;
 using Npgsql;
 
-namespace BookStoreApi.Data;
+namespace BookStoreApi.DataAccess.Context;
 
 public sealed class DbConnectionFactory(IConfiguration configuration) : IDbConnectionFactory
 {

@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace BookStoreApi.Data;
+namespace BookStoreApi.DataAccess.Context;
 
 public interface IDbConnectionFactory
 {

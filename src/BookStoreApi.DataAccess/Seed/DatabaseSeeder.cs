@@ -2,7 +2,7 @@ using Bogus;
 using BookStoreApi.Dtos;
 using BookStoreApi.Repositories;
 
-namespace BookStoreApi.Data;
+namespace BookStoreApi.DataAccess.Seed;
 
 public sealed class DatabaseSeeder(IBookRepository bookRepository, ILogger<DatabaseSeeder> logger)
 {

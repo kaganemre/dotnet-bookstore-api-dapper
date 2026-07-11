@@ -1,6 +1,6 @@
 using BookStoreApi.Dtos;
 
-namespace BookStoreApi.Repositories;
+namespace BookStoreApi.DataAccess.Repositories;
 
 public interface IBookRepository
 {
