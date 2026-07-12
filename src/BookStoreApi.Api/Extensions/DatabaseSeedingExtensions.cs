@@ -1,8 +1,8 @@
-using BookStoreApi.Data;
+using BookStoreApi.DataAccess.Seed;
 
-namespace BookStoreApi.Extensions;
+namespace BookStoreApi.Api.Extensions;
 
-public static class MigrationExtensions
+public static class DatabaseSeedingExtensions
 {
     public static async Task<bool?> HandleDatabaseSeedingAsync(this WebApplication app, string[] args)
     {

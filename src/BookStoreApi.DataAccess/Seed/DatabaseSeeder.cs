@@ -1,6 +1,7 @@
 using Bogus;
-using BookStoreApi.Dtos;
-using BookStoreApi.Repositories;
+using BookStoreApi.DataAccess.Repositories;
+using BookStoreApi.Shared.Dtos;
+using Microsoft.Extensions.Logging;
 
 namespace BookStoreApi.DataAccess.Seed;
 

@@ -1,5 +1,5 @@
-using BookStoreApi.BookStoreApi.Business.Dtos;
-using BookStoreApi.BookStoreApi.Business.Interfaces;
+using BookStoreApi.Business.Interfaces;
+using BookStoreApi.Shared.Dtos;
 
 namespace BookStoreApi.Api.Endpoints;
 

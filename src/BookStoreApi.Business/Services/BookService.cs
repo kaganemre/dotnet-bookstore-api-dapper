@@ -1,8 +1,8 @@
-using BookStoreApi.BookStoreApi.Business.Dtos;
-using BookStoreApi.BookStoreApi.Business.Interfaces;
-using BookStoreApi.BookStoreApi.DataAccess.Repositories;
+using BookStoreApi.Business.Interfaces;
+using BookStoreApi.DataAccess.Repositories;
+using BookStoreApi.Shared.Dtos;
 
-namespace BookStoreApi.BookStoreApi.Business.Services;
+namespace BookStoreApi.Business.Services;
 
 public sealed class BookService(IBookRepository repository) : IBookService
 {
