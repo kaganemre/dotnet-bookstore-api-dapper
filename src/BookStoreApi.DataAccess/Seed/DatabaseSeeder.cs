@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace BookStoreApi.DataAccess.Seed;
 
 public sealed class DatabaseSeeder(IBookRepository bookRepository, ILogger<DatabaseSeeder> logger)
+    : IDatabaseSeeder
 {
     private const int BatchSize = 50;
     private const int MaxConcurrency = 10;

@@ -10,11 +10,11 @@ public static class DatabaseSeedingExtensions
             return null;
 
         using var scope = app.Services.CreateScope();
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<DatabaseSeeder>>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<IDatabaseSeeder>>();
 
         try
         {
-            var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+            var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
             await seeder.SeedAsync(1000);
             return true;
         }
