@@ -5,11 +5,10 @@
     <PackageReference Include="Npgsql" Version="10.0.3" />
     <PackageReference Include="Dapper" Version="2.1.79" />
     <PackageReference Include="Bogus" Version="35.6.5" />
-  </ItemGroup>        
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BookStoreApi.Entities\BookStoreApi.Entities.csproj" />
-    <ProjectReference Include="..\BookStoreApi.Shared\BookStoreApi.Shared.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

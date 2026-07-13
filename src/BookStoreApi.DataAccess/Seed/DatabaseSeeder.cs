@@ -1,6 +1,6 @@
 using Bogus;
 using BookStoreApi.DataAccess.Repositories;
-using BookStoreApi.Shared.Dtos;
+using BookStoreApi.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace BookStoreApi.DataAccess.Seed;
@@ -21,13 +21,14 @@ public sealed class DatabaseSeeder(IBookRepository bookRepository, ILogger<Datab
 
         logger.LogInformation("Generating {Count} fake book records...", count);
 
-        var bookFaker = new Faker<CreateBookRequest>("en_GB")
-            .CustomInstantiator(f => new CreateBookRequest(
-                Title: f.Commerce.ProductName(),
-                Author: f.Name.FullName(),
-                Price: Math.Round(f.Random.Decimal(5m, 45m), 2),
-                Stock: f.Random.Number(5, 150)
-            ));
+        var bookFaker = new Faker<Book>("en_GB")
+            .CustomInstantiator(f => new Book
+            {
+                Title = f.Commerce.ProductName(),
+                Author = f.Name.FullName(),
+                Price = Math.Round(f.Random.Decimal(5m, 45m), 2),
+                Stock = f.Random.Number(5, 150)
+            });
 
         var fakeBooks = bookFaker.Generate(count);
 
@@ -58,7 +59,7 @@ public sealed class DatabaseSeeder(IBookRepository bookRepository, ILogger<Datab
     }
 
     private async Task<bool> InsertWithSemaphoreAsync(
-        CreateBookRequest book,
+        Book book,
         SemaphoreSlim semaphore,
         CancellationToken ct)
     {
@@ -73,7 +74,7 @@ public sealed class DatabaseSeeder(IBookRepository bookRepository, ILogger<Datab
         }
     }
 
-    private async Task<bool> InsertSafeAsync(CreateBookRequest book, CancellationToken ct)
+    private async Task<bool> InsertSafeAsync(Book book, CancellationToken ct)
     {
         try
         {
