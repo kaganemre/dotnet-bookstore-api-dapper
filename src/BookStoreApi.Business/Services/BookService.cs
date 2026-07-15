@@ -27,10 +27,10 @@ public sealed class BookService(IBookRepository repository) : IBookService
         return _repository.CreateAsync(book, ct);
     }
 
-    public async Task<bool> UpdateAsync(Guid id, UpdateBookRequest request, CancellationToken ct)
+    public Task<bool> UpdateAsync(Guid id, UpdateBookRequest request, CancellationToken ct)
     {
         var book = request.MapToBook(id);
-        return await _repository.UpdateAsync(book, ct);
+        return _repository.UpdateAsync(book, ct);
     }
 
     public Task<bool> DeleteAsync(Guid id, CancellationToken ct)
