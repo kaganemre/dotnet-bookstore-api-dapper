@@ -1,6 +1,7 @@
 using BookStoreApi.Business.Services;
 using BookStoreApi.Business.Tests.TestData;
 using BookStoreApi.DataAccess.Repositories;
+using BookStoreApi.Entities;
 using Moq;
 
 namespace BookStoreApi.Business.Tests.Services;
@@ -33,6 +34,24 @@ public sealed class BookServiceTests
         Assert.Equal(expectedBook.Author, result.Author);
         Assert.Equal(expectedBook.Price, result.Price);
         Assert.Equal(expectedBook.Stock, result.Stock);
+
+        _repositoryMock.Verify(
+            r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_Should_Return_Null_When_Book_Does_Not_Exist()
+    {
+        var id = Guid.CreateVersion7();
+
+        _repositoryMock
+            .Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()))
+            .ReturnsAsync((Book?)null);
+
+        var result = await _service.GetByIdAsync(id, CancellationToken.None);
+        
+        Assert.Null(result);
 
         _repositoryMock.Verify(
             r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()),
