@@ -86,4 +86,23 @@ public sealed class BookServiceTests
             r => r.GetAllAsync(It.IsAny<CancellationToken>()),
             Times.Once);
     }
+
+    [Fact]
+    public async Task GetAllAsync_Should_Return_Empty_Collection_When_No_Books_Exist()
+    {
+        _repositoryMock
+            .Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Enumerable.Empty<Book>());
+
+        var responses = await _service.GetAllAsync(CancellationToken.None);
+
+        var result = responses.ToList();
+
+        Assert.NotNull(result);
+        Assert.Empty(result);
+
+        _repositoryMock.Verify(
+            r => r.GetAllAsync(It.IsAny<CancellationToken>()),
+            Times.Once());
+    }
 }
