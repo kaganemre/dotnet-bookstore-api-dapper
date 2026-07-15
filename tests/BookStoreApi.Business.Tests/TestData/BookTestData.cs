@@ -13,4 +13,7 @@ public static class BookTestData
             Price = 49.99m,
             Stock = 15
         };
+
+    public static IReadOnlyList<Book> CreateBooks(int count)
+        => Enumerable.Range(1, count).Select(_ => CreateBook()).ToList();
 }

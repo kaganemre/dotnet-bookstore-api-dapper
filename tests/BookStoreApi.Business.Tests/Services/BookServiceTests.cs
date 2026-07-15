@@ -50,11 +50,40 @@ public sealed class BookServiceTests
             .ReturnsAsync((Book?)null);
 
         var result = await _service.GetByIdAsync(id, CancellationToken.None);
-        
+
         Assert.Null(result);
 
         _repositoryMock.Verify(
             r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_Should_Return_All_Books()
+    {
+        var expectedBooks = BookTestData.CreateBooks(2);
+
+        _repositoryMock
+            .Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(expectedBooks);
+
+        var responses = await _service.GetAllAsync(CancellationToken.None);
+
+        var result = responses.ToList();
+
+        Assert.Equal(expectedBooks.Count, result.Count);
+
+        for (var i = 0; i < expectedBooks.Count; i++)
+        {
+            Assert.Equal(expectedBooks[i].Id, result[i].Id);
+            Assert.Equal(expectedBooks[i].Title, result[i].Title);
+            Assert.Equal(expectedBooks[i].Author, result[i].Author);
+            Assert.Equal(expectedBooks[i].Price, result[i].Price);
+            Assert.Equal(expectedBooks[i].Stock, result[i].Stock);
+        }
+
+        _repositoryMock.Verify(
+            r => r.GetAllAsync(It.IsAny<CancellationToken>()),
             Times.Once);
     }
 }
