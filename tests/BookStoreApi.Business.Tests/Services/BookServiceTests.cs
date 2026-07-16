@@ -180,15 +180,33 @@ public sealed class BookServiceTests
     public async Task DeleteAsync_Should_Return_True_When_Delete_Is_Successful()
     {
         var id = Guid.CreateVersion7();
-        
+
         _repositoryMock
             .Setup(r => r.DeleteAsync(id, It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
-        
+
         var result = await _service.DeleteAsync(id, CancellationToken.None);
-        
+
         Assert.True(result);
-        
+
+        _repositoryMock.Verify(
+            r => r.DeleteAsync(id, It.IsAny<CancellationToken>()),
+            Times.Once());
+    }
+
+    [Fact]
+    public async Task DeleteAsync_Should_Return_False_When_Delete_Fails()
+    {
+        var id = Guid.CreateVersion7();
+
+        _repositoryMock
+            .Setup(r => r.DeleteAsync(id, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false);
+
+        var result = await _service.DeleteAsync(id, CancellationToken.None);
+
+        Assert.False(result);
+
         _repositoryMock.Verify(
             r => r.DeleteAsync(id, It.IsAny<CancellationToken>()),
             Times.Once());
