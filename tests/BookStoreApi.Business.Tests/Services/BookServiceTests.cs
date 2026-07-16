@@ -103,7 +103,7 @@ public sealed class BookServiceTests
 
         _repositoryMock.Verify(
             r => r.GetAllAsync(It.IsAny<CancellationToken>()),
-            Times.Once());
+            Times.Once);
     }
 
     [Fact]
@@ -128,7 +128,7 @@ public sealed class BookServiceTests
                     b.Price == request.Price &&
                     b.Stock == request.Stock),
                 It.IsAny<CancellationToken>()),
-            Times.Once());
+            Times.Once);
     }
 
     [Fact]
@@ -154,7 +154,7 @@ public sealed class BookServiceTests
                     b.Price == request.Price &&
                     b.Stock == request.Stock),
                 It.IsAny<CancellationToken>()),
-            Times.Once());
+            Times.Once);
     }
 
     [Fact]
@@ -173,7 +173,7 @@ public sealed class BookServiceTests
 
         _repositoryMock.Verify(
             r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()),
-            Times.Once());
+            Times.Once);
     }
 
     [Fact]
@@ -191,7 +191,7 @@ public sealed class BookServiceTests
 
         _repositoryMock.Verify(
             r => r.DeleteAsync(id, It.IsAny<CancellationToken>()),
-            Times.Once());
+            Times.Once);
     }
 
     [Fact]
@@ -209,6 +209,6 @@ public sealed class BookServiceTests
 
         _repositoryMock.Verify(
             r => r.DeleteAsync(id, It.IsAny<CancellationToken>()),
-            Times.Once());
+            Times.Once);
     }
 }
