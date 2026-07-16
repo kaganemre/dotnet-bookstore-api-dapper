@@ -1,4 +1,5 @@
 using BookStoreApi.Entities;
+using BookStoreApi.Shared.Dtos;
 
 namespace BookStoreApi.Business.Tests.TestData;
 
@@ -16,4 +17,7 @@ public static class BookTestData
 
     public static IReadOnlyList<Book> CreateBooks(int count)
         => Enumerable.Range(1, count).Select(_ => CreateBook()).ToList();
+
+    public static CreateBookRequest CreateBookRequest() 
+        => new("Clean Architecture", "Robert C. Martin", 59.99m, 20);
 }
