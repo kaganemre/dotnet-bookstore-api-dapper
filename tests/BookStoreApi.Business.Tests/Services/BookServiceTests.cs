@@ -136,15 +136,15 @@ public sealed class BookServiceTests
     {
         var id = Guid.CreateVersion7();
         var request = BookTestData.CreateUpdateBookRequest();
-        
+
         _repositoryMock
             .Setup(r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
-        
+
         var result = await _service.UpdateAsync(id, request, CancellationToken.None);
-        
+
         Assert.True(result);
-        
+
         _repositoryMock.Verify(
             r => r.UpdateAsync(
                 It.Is<Book>(b =>
@@ -154,6 +154,25 @@ public sealed class BookServiceTests
                     b.Price == request.Price &&
                     b.Stock == request.Stock),
                 It.IsAny<CancellationToken>()),
+            Times.Once());
+    }
+
+    [Fact]
+    public async Task UpdateAsync_Should_Return_False_When_Update_Fails()
+    {
+        var id = Guid.CreateVersion7();
+        var request = BookTestData.CreateUpdateBookRequest();
+
+        _repositoryMock
+            .Setup(r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false);
+
+        var result = await _service.UpdateAsync(id, request, CancellationToken.None);
+
+        Assert.False(result);
+
+        _repositoryMock.Verify(
+            r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()),
             Times.Once());
     }
 }
