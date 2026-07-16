@@ -175,4 +175,22 @@ public sealed class BookServiceTests
             r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()),
             Times.Once());
     }
+
+    [Fact]
+    public async Task DeleteAsync_Should_Return_True_When_Delete_Is_Successful()
+    {
+        var id = Guid.CreateVersion7();
+        
+        _repositoryMock
+            .Setup(r => r.DeleteAsync(id, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+        
+        var result = await _service.DeleteAsync(id, CancellationToken.None);
+        
+        Assert.True(result);
+        
+        _repositoryMock.Verify(
+            r => r.DeleteAsync(id, It.IsAny<CancellationToken>()),
+            Times.Once());
+    }
 }
