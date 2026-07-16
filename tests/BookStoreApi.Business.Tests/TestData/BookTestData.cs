@@ -20,4 +20,10 @@ public static class BookTestData
 
     public static CreateBookRequest CreateBookRequest() 
         => new("Clean Architecture", "Robert C. Martin", 59.99m, 20);
+    public static UpdateBookRequest CreateUpdateBookRequest()
+        => new(
+            "Clean Architecture (2nd Edition)",
+            "Robert C. Martin",
+            64.99m,
+            25);
 }

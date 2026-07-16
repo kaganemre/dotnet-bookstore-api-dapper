@@ -130,4 +130,30 @@ public sealed class BookServiceTests
                 It.IsAny<CancellationToken>()),
             Times.Once());
     }
+
+    [Fact]
+    public async Task UpdateAsync_Should_Return_True_When_Update_Is_Successful()
+    {
+        var id = Guid.CreateVersion7();
+        var request = BookTestData.CreateUpdateBookRequest();
+        
+        _repositoryMock
+            .Setup(r => r.UpdateAsync(It.IsAny<Book>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+        
+        var result = await _service.UpdateAsync(id, request, CancellationToken.None);
+        
+        Assert.True(result);
+        
+        _repositoryMock.Verify(
+            r => r.UpdateAsync(
+                It.Is<Book>(b =>
+                    b.Id == id &&
+                    b.Title == request.Title &&
+                    b.Author == request.Author &&
+                    b.Price == request.Price &&
+                    b.Stock == request.Stock),
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+    }
 }
