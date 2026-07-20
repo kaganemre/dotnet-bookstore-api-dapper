@@ -8,5 +8,6 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/BookStoreApi.Business.Tests/BookStoreApi.Business.Tests.csproj" />
+    <Project Path="tests/BookStoreApi.DataAccess.IntegrationTests/BookStoreApi.DataAccess.IntegrationTests.csproj" />
   </Folder>
 </Solution>
