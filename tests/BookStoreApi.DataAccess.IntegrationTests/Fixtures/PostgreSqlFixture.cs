@@ -1,3 +1,5 @@
+using Dapper;
+using Npgsql;
 using Testcontainers.PostgreSql;
 
 namespace BookStoreApi.DataAccess.IntegrationTests.Fixtures;
@@ -10,13 +12,29 @@ public sealed class PostgreSqlFixture : IAsyncLifetime
         .WithPassword("postgres")
         .Build();
 
-    public PostgreSqlContainer Container => _container;
-    
     public string ConnectionString => _container.GetConnectionString();
 
     public async ValueTask InitializeAsync()
     {
         await _container.StartAsync();
+
+        var schemaPath = Path.Combine("Scripts", "schema.sql");
+        var sql = await File.ReadAllTextAsync(schemaPath);
+
+        await using var connection = new NpgsqlConnection(ConnectionString);
+
+        await connection.OpenAsync();
+
+        await connection.ExecuteAsync(sql);
+    }
+
+    public async Task ResetDatabaseAsync(CancellationToken cancellationToken = default)
+    {
+        await using var connection = new NpgsqlConnection(ConnectionString);
+
+        await connection.OpenAsync(cancellationToken);
+
+        await connection.ExecuteAsync("""TRUNCATE TABLE books;""");
     }
 
     public async ValueTask DisposeAsync()

@@ -8,15 +8,15 @@ public sealed class PostgreSqlFixtureTests(PostgreSqlFixture fixture) : IClassFi
     [Fact]
     public async Task PostgreSql_Container_Should_Accept_Connections()
     {
-        var ct = CancellationToken.None;
+        var cancellationToken = TestContext.Current.CancellationToken;
 
         await using var connection = new NpgsqlConnection(fixture.ConnectionString);
 
-        await connection.OpenAsync(ct);
+        await connection.OpenAsync(cancellationToken);
 
         await using var command = new NpgsqlCommand("SELECT 1", connection);
 
-        var result = await command.ExecuteScalarAsync(ct);
+        var result = await command.ExecuteScalarAsync(cancellationToken);
 
         Assert.IsType<int>(result);
         Assert.Equal(1, (int)result);
