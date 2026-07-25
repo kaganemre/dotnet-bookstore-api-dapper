@@ -14,7 +14,7 @@ public sealed class Book
     {
         if (price <= 0)
         {
-            throw new BookDomainException("Price must be greater than zero");
+            throw new BookDomainException("Price must be greater than zero.");
         }
 
         Price = price;
