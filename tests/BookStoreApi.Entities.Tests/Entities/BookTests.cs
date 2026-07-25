@@ -31,4 +31,19 @@ public sealed class BookTests
 
         Assert.Equal("Price must be greater than zero.", exception.Message);
     }
+
+    [Fact]
+    public void ChangePrice_Should_Not_Modify_Price_When_Exception_Is_Thrown()
+    {
+        // Arrange
+        var book = BookTestData.CreateBook();
+
+        decimal originalPrice = book.Price;
+
+        // Act
+        Assert.Throws<BookDomainException>(() => book.ChangePrice(0));
+
+        // Assert
+        Assert.Equal(originalPrice, book.Price);
+    }
 }
