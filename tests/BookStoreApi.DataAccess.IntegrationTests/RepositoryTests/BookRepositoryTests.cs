@@ -69,4 +69,29 @@ public sealed class BookRepositoryTests : IClassFixture<PostgreSqlFixture>
         Assert.Equal(book.Price, insertedBook.Price);
         Assert.Equal(book.Stock, insertedBook.Stock);
     }
+
+    [Fact]
+    public async Task GetByIdAsync_Should_Return_Book_When_Book_Exists()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+
+        await _fixture.ResetDatabaseAsync(cancellationToken);
+
+        var book = BookTestData.CreateBook();
+
+        var createdBookId = await _repository.CreateAsync(book, cancellationToken);
+
+        // Act
+        var result = await _repository.GetByIdAsync(createdBookId, cancellationToken);
+
+        // Assert
+        Assert.NotNull(result);
+
+        Assert.Equal(createdBookId, result.Id);
+        Assert.Equal(book.Title, result.Title);
+        Assert.Equal(book.Author, result.Author);
+        Assert.Equal(book.Price, result.Price);
+        Assert.Equal(book.Stock, result.Stock);
+    }
 }
