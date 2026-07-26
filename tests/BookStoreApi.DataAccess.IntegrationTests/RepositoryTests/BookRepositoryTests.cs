@@ -94,4 +94,21 @@ public sealed class BookRepositoryTests : IClassFixture<PostgreSqlFixture>
         Assert.Equal(book.Price, result.Price);
         Assert.Equal(book.Stock, result.Stock);
     }
+
+    [Fact]
+    public async Task GetByIdAsync_Should_Return_Null_When_Book_Does_Not_Exist()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+
+        await _fixture.ResetDatabaseAsync(cancellationToken);
+
+        var bookId = Guid.CreateVersion7();
+
+        // Act
+        var result = await _repository.GetByIdAsync(bookId, cancellationToken);
+
+        // Assert
+        Assert.Null(result);
+    }
 }
