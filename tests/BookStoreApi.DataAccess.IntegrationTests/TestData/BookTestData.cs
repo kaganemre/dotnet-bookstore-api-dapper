@@ -16,4 +16,14 @@ public static class BookTestData
             Price = price,
             Stock = stock
         };
+
+    public static Book CreateUpdatedBook(Guid id)
+        => new()
+        {
+            Id = id,
+            Title = "Clean Architecture",
+            Author = "Robert C. Martin",
+            Price = 79.99m,
+            Stock = 25
+        };
 }
