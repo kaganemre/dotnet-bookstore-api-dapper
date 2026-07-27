@@ -111,4 +111,44 @@ public sealed class BookRepositoryTests : IClassFixture<PostgreSqlFixture>
         // Assert
         Assert.Null(result);
     }
+
+    [Fact]
+    public async Task GetAllAsync_Should_Return_All_Books()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+
+        await _fixture.ResetDatabaseAsync(cancellationToken);
+
+        var firstBook = BookTestData.CreateBook();
+
+        var secondBook = BookTestData.CreateBook(
+            title: "The Pragmatic Programmer",
+            author: "Andrew Hunt",
+            price: 59.99m,
+            stock: 20);
+
+        var firstBookId = await _repository.CreateAsync(firstBook, cancellationToken);
+        var secondBookId = await _repository.CreateAsync(secondBook, cancellationToken);
+
+        // Act
+        var books = (await _repository.GetAllAsync(cancellationToken)).ToList();
+
+        // Assert
+        Assert.Equal(2, books.Count);
+
+        var firstResult = Assert.Single(books, book => book.Id == firstBookId);
+
+        Assert.Equal(firstBook.Title, firstResult.Title);
+        Assert.Equal(firstBook.Author, firstResult.Author);
+        Assert.Equal(firstBook.Price, firstResult.Price);
+        Assert.Equal(firstBook.Stock, firstResult.Stock);
+
+        var secondResult = Assert.Single(books, book => book.Id == secondBookId);
+
+        Assert.Equal(secondBook.Title, secondResult.Title);
+        Assert.Equal(secondBook.Author, secondResult.Author);
+        Assert.Equal(secondBook.Price, secondResult.Price);
+        Assert.Equal(secondBook.Stock, secondResult.Stock);
+    }
 }
