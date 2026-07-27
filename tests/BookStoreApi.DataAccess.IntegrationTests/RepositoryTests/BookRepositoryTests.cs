@@ -151,4 +151,19 @@ public sealed class BookRepositoryTests : IClassFixture<PostgreSqlFixture>
         Assert.Equal(secondBook.Price, secondResult.Price);
         Assert.Equal(secondBook.Stock, secondResult.Stock);
     }
+
+    [Fact]
+    public async Task GetAllAsync_Should_Return_Empty_Collection_When_No_Books_Exist()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+
+        await _fixture.ResetDatabaseAsync(cancellationToken);
+
+        // Act
+        var books = await _repository.GetAllAsync(cancellationToken);
+
+        // Assert
+        Assert.Empty(books);
+    }
 }
