@@ -237,4 +237,21 @@ public sealed class BookRepositoryTests : IClassFixture<PostgreSqlFixture>
 
         Assert.Null(deletedBook);
     }
+
+    [Fact]
+    public async Task DeleteAsync_Should_Return_False_When_Book_Does_Not_Exist()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+
+        await _fixture.ResetDatabaseAsync(cancellationToken);
+
+        var bookId = Guid.CreateVersion7();
+
+        // Act
+        var isDeleted = await _repository.DeleteAsync(bookId, cancellationToken);
+
+        // Assert
+        Assert.False(isDeleted);
+    }
 }
