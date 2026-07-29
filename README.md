@@ -212,13 +212,13 @@ dotnet test
 
 ## API Endpoints
 
-  Method   Route               Description
-  -------- ------------------- -----------------------
-  GET      `/api/books`        Retrieve all books
-  GET      `/api/books/{id}`   Retrieve a book by ID
-  POST     `/api/books`        Create a new book
-  PUT      `/api/books/{id}`   Update a book
-  DELETE   `/api/books/{id}`   Delete a book
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | `/api/books` | Retrieve all books |
+| GET | `/api/books/{id}` | Retrieve a book by ID |
+| POST | `/api/books` | Create a new book |
+| PUT | `/api/books/{id}` | Update a book |
+| DELETE | `/api/books/{id}` | Delete a book |
 
 ------------------------------------------------------------------------
 
