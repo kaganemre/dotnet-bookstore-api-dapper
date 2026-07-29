@@ -52,15 +52,15 @@ flowchart TD
 
 ## Tech Stack
 
-  Layer               Technology
-  ------------------- ---------------------------------------
-  Framework           ASP.NET Core 10 Minimal API
-  Language            C# 14
-  Data Access         Dapper + Npgsql
-  Database            PostgreSQL (Supabase)
-  Testing             xUnit v3 + Moq + Testcontainers
-  Seed Data           Bogus + SemaphoreSlim
-  API Documentation   Scalar + Microsoft.AspNetCore.OpenApi
+| Layer | Technology |
+|-------|------------|
+| Framework | ASP.NET Core 10 Minimal API |
+| Language | C# 14 |
+| Data Access | Dapper + Npgsql |
+| Database | PostgreSQL (Supabase) |
+| Testing | xUnit v3 + Moq + Testcontainers |
+| Seed Data | Bogus + SemaphoreSlim |
+| API Documentation | Scalar + Microsoft.AspNetCore.OpenApi |
 
 ------------------------------------------------------------------------
 
